@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Gradiente rosa sutil no fundo */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, rgba(0, 0, 0, 0.9) 70%);
+            z-index: -1;
+        }
+        #message {
+            position: absolute;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff69b4;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.5);
+            display: none;
+            z-index: 10;
+        }
+        #image {
+            max-width: 80%;
+            max-height: 60vh;
+            margin-bottom: 20px;
+            border: 5px solid #ff69b4;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(255, 105, 180, 0.5);
+        }
+        /* Corações flutuantes */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 24px;
+            animation: float 6s infinite linear;
+            opacity: 0.7;
+        }
+        .heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart:nth-child(3) { top: 40%; left: 20%; animation-delay: 2s; }
+        .heart:nth-child(4) { top: 60%; right: 10%; animation-delay: 3s; }
+        .heart:nth-child(5) { top: 80%; left: 15%; animation-delay: 4s; }
+        .heart:nth-child(6) { top: 30%; right: 20%; animation-delay: 5s; }
+        .heart:nth-child(7) { top: 50%; left: 5%; animation-delay: 6s; }
+        .heart:nth-child(8) { top: 70%; right: 5%; animation-delay: 7s; }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Corações decorativos -->
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+    <div class="heart">♥</div>
+
+    <div id="message">Te amo Namorada, Feliz Valentine's Day</div>
+    <img id="image" src="image1.jpg" alt="Imagem principal">
+    <div class="buttons">
+        <button id="sim">Simm</button>
+        <button id="claro">Claroo</button>
+    </div>
+
+    <audio id="audio" autoplay loop>
+        <source src="romantic-audio.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script>
+        let imageIndex = 1;
+        const maxImages = 5;
+        const imageElement = document.getElementById('image');
+        const messageElement = document.getElementById('message');
+        const simButton = document.getElementById('sim');
+        const claroButton = document.getElementById('claro');
+
+        function changeImage() {
+            imageIndex++;
+            if (imageIndex > maxImages) {
+                imageIndex = maxImages; // Não vai além da quinta
+            }
+            imageElement.src = `image${imageIndex}.jpg`;
+            if (imageIndex === 5) {
+                messageElement.style.display = 'block';
+            }
+        }
+
+        simButton.addEventListener('click', changeImage);
+        claroButton.addEventListener('click', changeImage);
+
+        // Tocar áudio automaticamente ao carregar a página
+        window.addEventListener('load', function() {
+            const audio = document.getElementById('audio');
+            audio.play().catch(function(error) {
+                console.log('Autoplay bloqueado pelo navegador:', error);
+            });
+        });
+    </script>
+</body>
+</html>
