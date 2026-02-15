@@ -52,6 +52,8 @@
             display: flex;
             gap: 20px;
             z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         button {
             padding: 12px 24px;
@@ -68,6 +70,9 @@
         button:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 12px rgba(255, 105, 180, 0.5);
+        }
+        #playAudio {
+            display: none; /* Inicialmente oculto */
         }
         /* Corações flutuantes */
         .heart {
@@ -108,9 +113,10 @@
     <div class="buttons">
         <button id="sim">Simm</button>
         <button id="claro">Claroo</button>
+        <button id="playAudio">Tocar Música</button>
     </div>
 
-    <audio id="audio" autoplay loop>
+    <audio id="audio" loop>
         <source src="romantic-audio.mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
@@ -122,6 +128,8 @@
         const messageElement = document.getElementById('message');
         const simButton = document.getElementById('sim');
         const claroButton = document.getElementById('claro');
+        const playAudioButton = document.getElementById('playAudio');
+        const audio = document.getElementById('audio');
 
         function changeImage() {
             imageIndex++;
@@ -137,13 +145,25 @@
         simButton.addEventListener('click', changeImage);
         claroButton.addEventListener('click', changeImage);
 
-        // Tocar áudio automaticamente ao carregar a página
+        // Função para tocar áudio
+        function playAudio() {
+            audio.play().then(() => {
+                playAudioButton.style.display = 'none'; // Oculta o botão se tocar
+            }).catch(error => {
+                console.log('Erro ao tocar áudio:', error);
+            });
+        }
+
+        // Tentar tocar automaticamente ao carregar
         window.addEventListener('load', function() {
-            const audio = document.getElementById('audio');
             audio.play().catch(function(error) {
-                console.log('Autoplay bloqueado pelo navegador:', error);
+                console.log('Autoplay bloqueado, mostrando botão:', error);
+                playAudioButton.style.display = 'inline-block'; // Mostra o botão se autoplay falhar
             });
         });
+
+        // Evento para o botão de tocar música
+        playAudioButton.addEventListener('click', playAudio);
     </script>
 </body>
 </html>
